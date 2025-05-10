@@ -1,3 +1,14 @@
+/*
+Problem Statement:
+Given a binary tree, return the zigzag level order traversal of its nodes’ values. (i.e., from left to right, then right to left for the next level and alternate between).
+
+🧾 Input:
+A binary tree root node.
+
+📤 Output:
+A list of lists, where each sublist contains node values at a particular level in zigzag order.
+*/
+
 import java.util.*;
 
 class TreeNode {
