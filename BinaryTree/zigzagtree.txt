@@ -1,0 +1,66 @@
+import java.util.*;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+
+    TreeNode(int value) {
+        this.val = value;
+    }
+}
+
+public class ZigzagBSTTraversal {
+
+    public TreeNode insert(TreeNode root, int val) {
+        if (root == null) return new TreeNode(val);
+        if (val < root.val) root.left = insert(root.left, val);
+        else root.right = insert(root.right, val);
+        return root;
+    }
+
+    public List<List<Integer>> zigzagTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        int level = 1;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> currentLevel = new ArrayList<>();
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                currentLevel.add(node.val);
+
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+
+            if (level % 2 == 1) {
+                Collections.reverse(currentLevel);
+            }
+
+            result.add(currentLevel);
+            level++;
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        ZigzagBSTTraversal tree = new ZigzagBSTTraversal();
+        TreeNode root = null;
+        int[] values = {50, 30, 70, 20, 40, 60, 80};
+
+        for (int val : values) {
+            root = tree.insert(root, val);
+        }
+
+        List<List<Integer>> traversal = tree.zigzagTraversal(root);
+        for (int i = 0; i < traversal.size(); i++) {
+            System.out.println("Level " + (i + 1) + ": " + traversal.get(i));
+        }
+    }
+}
